@@ -8,7 +8,7 @@ import shutil      # For checking if executables exist in PATH
 
 # This fork is installed from GitHub: the PyPI package of the same name belongs to the upstream
 # project and does not contain this fork's tools. Update the tag when you release a new version.
-PACKAGE_SOURCE = "git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.1"
+PACKAGE_SOURCE = "git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.2"
 
 def check_prerequisites():
     """
