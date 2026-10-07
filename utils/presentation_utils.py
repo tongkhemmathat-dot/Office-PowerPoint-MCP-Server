@@ -7,14 +7,58 @@ from typing import Dict, List, Optional
 import os
 
 
-def create_presentation() -> Presentation:
+SLIDE_SIZES = {
+    "4:3": (10.0, 7.5),
+    "16:9": (13.333, 7.5),
+    "16:10": (10.0, 6.25),
+}
+
+
+def set_slide_size(pres: Presentation, width_in: float, height_in: float) -> None:
+    """
+    Set the slide size and rescale master/layout shapes horizontally and vertically
+    so placeholders stay in proportion.
+    """
+    from pptx.util import Inches
+    old_w, old_h = int(pres.slide_width), int(pres.slide_height)
+    new_w, new_h = int(Inches(width_in)), int(Inches(height_in))
+    fx, fy = new_w / old_w, new_h / old_h
+    pres.slide_width, pres.slide_height = new_w, new_h
+    for master in pres.slide_masters:
+        containers = [master] + list(master.slide_layouts)
+        for container in containers:
+            for shape in container.shapes:
+                if shape.left is None:  # placeholder inheriting its position
+                    continue
+                shape.left, shape.top = round(shape.left * fx), round(shape.top * fy)
+                shape.width, shape.height = round(shape.width * fx), round(shape.height * fy)
+
+
+def create_presentation(slide_size: Optional[str] = None,
+                        width: Optional[float] = None,
+                        height: Optional[float] = None) -> Presentation:
     """
     Create a new PowerPoint presentation.
-    
+
+    Args:
+        slide_size: Preset "4:3" (default template), "16:9" or "16:10"
+        width, height: Custom slide size in inches (both required; overrides slide_size)
+
     Returns:
         A new Presentation object
     """
-    return Presentation()
+    pres = Presentation()
+    if width is not None or height is not None:
+        if width is None or height is None or width <= 0 or height <= 0:
+            raise ValueError("width and height must both be given and positive")
+        if not (1 <= width <= 56 and 1 <= height <= 56):
+            raise ValueError("width and height must be between 1 and 56 inches")
+        set_slide_size(pres, width, height)
+    elif slide_size and slide_size != "4:3":
+        if slide_size not in SLIDE_SIZES:
+            raise ValueError(f"Invalid slide_size '{slide_size}'. Use: {', '.join(SLIDE_SIZES)}")
+        set_slide_size(pres, *SLIDE_SIZES[slide_size])
+    return pres
 
 
 def open_presentation(file_path: str) -> Presentation:

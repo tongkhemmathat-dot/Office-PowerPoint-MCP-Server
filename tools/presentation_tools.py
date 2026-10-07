@@ -9,7 +9,7 @@ from mcp.types import ToolAnnotations
 import utils as ppt_utils
 
 
-def register_presentation_tools(app: FastMCP, presentations: Dict, get_current_presentation_id, get_template_search_directories):
+def register_presentation_tools(app: FastMCP, presentations: Dict, get_current_presentation_id, get_template_search_directories, set_current_presentation_id=None):
     """Register presentation management tools with the FastMCP app"""
     
     @app.tool(
@@ -17,10 +17,25 @@ def register_presentation_tools(app: FastMCP, presentations: Dict, get_current_p
             title="Create Presentation",
         ),
     )
-    def create_presentation(id: Optional[str] = None) -> Dict:
-        """Create a new PowerPoint presentation."""
-        # Create a new presentation
-        pres = ppt_utils.create_presentation()
+    def create_presentation(
+        id: Optional[str] = None,
+        slide_size: Optional[str] = None,
+        width: Optional[float] = None,
+        height: Optional[float] = None
+    ) -> Dict:
+        """
+        Create a new PowerPoint presentation.
+
+        Args:
+            id: Optional presentation ID (generated if not provided)
+            slide_size: "4:3" (default, 10x7.5 in), "16:9" (13.333x7.5 in) or "16:10" (10x6.25 in)
+            width: Custom slide width in inches (use together with height; overrides slide_size)
+            height: Custom slide height in inches
+        """
+        try:
+            pres = ppt_utils.create_presentation(slide_size, width, height)
+        except ValueError as e:
+            return {"error": str(e)}
         
         # Generate an ID if not provided
         if id is None:
@@ -28,12 +43,15 @@ def register_presentation_tools(app: FastMCP, presentations: Dict, get_current_p
         
         # Store the presentation
         presentations[id] = pres
-        # Set as current presentation (this would need to be handled by caller)
+        if set_current_presentation_id:
+            set_current_presentation_id(id)
         
         return {
             "presentation_id": id,
             "message": f"Created new presentation with ID: {id}",
-            "slide_count": len(pres.slides)
+            "slide_count": len(pres.slides),
+            "slide_width_in": round(pres.slide_width / 914400, 3),
+            "slide_height_in": round(pres.slide_height / 914400, 3)
         }
 
     @app.tool(
@@ -74,6 +92,8 @@ def register_presentation_tools(app: FastMCP, presentations: Dict, get_current_p
         
         # Store the presentation
         presentations[id] = pres
+        if set_current_presentation_id:
+            set_current_presentation_id(id)
         
         return {
             "presentation_id": id,
@@ -111,6 +131,8 @@ def register_presentation_tools(app: FastMCP, presentations: Dict, get_current_p
         
         # Store the presentation
         presentations[id] = pres
+        if set_current_presentation_id:
+            set_current_presentation_id(id)
         
         return {
             "presentation_id": id,
