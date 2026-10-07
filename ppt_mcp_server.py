@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 MCP Server for PowerPoint manipulation using python-pptx.
-Consolidated version with 20 tools organized into multiple modules.
+Consolidated version with 32 tools organized into multiple modules.
 """
 import os
 import argparse
@@ -19,7 +19,10 @@ from tools import (
     register_chart_tools,
     register_connector_tools,
     register_master_tools,
-    register_transition_tools
+    register_transition_tools,
+    register_shape_tools,
+    register_render_tools,
+    register_diagram_tools
 )
 
 # Initialize the FastMCP server
@@ -154,7 +157,17 @@ def add_shape_direct(slide, shape_type: str, left: float, top: float, width: flo
         'heptagon': 145,             # HEPTAGON
         'octagon': 6,                # OCTAGON
         'star': 92,                  # STAR_5_POINT
-        'arrow': 33,                 # RIGHT_ARROW
+        'arrow': 33,                 # RIGHT_ARROW (alias of right_arrow)
+        'right_arrow': 33,           # RIGHT_ARROW
+        'left_arrow': 34,            # LEFT_ARROW
+        'up_arrow': 35,              # UP_ARROW
+        'down_arrow': 36,            # DOWN_ARROW
+        'left_right_arrow': 37,      # LEFT_RIGHT_ARROW
+        'up_down_arrow': 38,         # UP_DOWN_ARROW
+        'chevron': 52,               # CHEVRON
+        'cylinder': 13,              # CAN (database symbol)
+        'cube': 14,                  # CUBE
+        'flowchart_terminator': 69,  # FLOWCHART_TERMINATOR
         'cloud': 179,                # CLOUD
         'heart': 21,                 # HEART
         'lightning_bolt': 22,        # LIGHTNING_BOLT
@@ -206,31 +219,13 @@ class PresentationManager:
 # Create presentation manager wrapper
 presentation_manager = PresentationManager(presentations)
 
-# Wrapper functions to handle state management
-def create_presentation_wrapper(original_func):
-    """Wrapper to handle presentation creation with state management."""
-    def wrapper(*args, **kwargs):
-        result = original_func(*args, **kwargs)
-        if "presentation_id" in result and result["presentation_id"] in presentations:
-            set_current_presentation_id(result["presentation_id"])
-        return result
-    return wrapper
-
-def open_presentation_wrapper(original_func):
-    """Wrapper to handle presentation opening with state management."""
-    def wrapper(*args, **kwargs):
-        result = original_func(*args, **kwargs)
-        if "presentation_id" in result and result["presentation_id"] in presentations:
-            set_current_presentation_id(result["presentation_id"])
-        return result
-    return wrapper
-
 # Register all tool modules
 register_presentation_tools(
     app, 
     presentations, 
     get_current_presentation_id, 
-    get_template_search_directories
+    get_template_search_directories,
+    set_current_presentation_id
 )
 
 register_content_tools(
@@ -325,6 +320,12 @@ register_transition_tools(
 )
 
 
+register_shape_tools(app, presentations, get_current_presentation_id)
+
+register_render_tools(app, presentations, get_current_presentation_id)
+
+register_diagram_tools(app, presentations, get_current_presentation_id, add_shape_direct)
+
 # ---- Additional Utility Tools ----
 
 @app.tool()
@@ -366,8 +367,8 @@ def get_server_info() -> Dict:
     """Get information about the MCP server."""
     return {
         "name": "PowerPoint MCP Server - Enhanced Edition",
-        "version": "2.1.0",
-        "total_tools": 32,  # Organized into 11 specialized modules
+        "version": "2.0.7",
+        "total_tools": 42,  # Organized into 14 specialized modules
         "loaded_presentations": len(presentations),
         "current_presentation": current_presentation_id,
         "features": [
@@ -376,7 +377,8 @@ def get_server_info() -> Dict:
             "Template Operations (7 tools)",
             "Structural Elements (4 tools)",
             "Professional Design (3 tools)",
-            "Specialized Features (5 tools)"
+            "Specialized Features (5 tools)",
+            "Diagram Building (5 tools): shapes, rendering, icons, batch elements"
         ],
         "improvements": [
             "32 specialized tools organized into 11 focused modules",
@@ -398,7 +400,8 @@ def get_server_info() -> Dict:
             "Advanced Text Run Formatting - Apply formatting to specific text runs",
             "Shape Connectors - Add connector lines and arrows between points",
             "Slide Master Management - Access and manage slide masters and layouts",
-            "Slide Transitions - Basic transition management (placeholder for future)"
+            "Slide Transitions - Basic transition management (placeholder for future)",
+            "Diagram Support - Arrowheads/dash styles, shape editing, icon library, batch placement, slide rendering, 16:9 slide size"
         ]
     }
 

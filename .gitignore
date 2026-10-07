@@ -12,3 +12,5 @@ wheels/
 test/
 .DS_Store
 CLAUDE.md
+# Downloaded icon libraries (see scripts/fetch_aws_icons.py)
+icons/

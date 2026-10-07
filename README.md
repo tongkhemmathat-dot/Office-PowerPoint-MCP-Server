@@ -2,7 +2,7 @@
 [![smithery badge](https://smithery.ai/badge/@GongRzhe/Office-PowerPoint-MCP-Server)](https://smithery.ai/server/@GongRzhe/Office-PowerPoint-MCP-Server)
 ![](https://badge.mcpx.dev?type=server 'MCP Server')
 
-A comprehensive MCP (Model Context Protocol) server for PowerPoint manipulation using python-pptx. **Version 2.0** provides 32 powerful tools organized into 11 specialized modules, offering complete PowerPoint creation, management, and professional design capabilities. The server features a modular architecture with enhanced parameter handling, intelligent operation selection, and comprehensive error handling.
+A comprehensive MCP (Model Context Protocol) server for PowerPoint manipulation using python-pptx. **Version 2.0** provides 42 powerful tools organized into 14 specialized modules, offering complete PowerPoint creation, management, and professional design capabilities. The server features a modular architecture with enhanced parameter handling, intelligent operation selection, and comprehensive error handling.
 
 ----
 
@@ -194,9 +194,9 @@ If you have `uvx` installed, you can run the server directly from PyPI without l
 
 ## 🚀 What's New in v2.0
 
-### **Comprehensive Tool Suite (32 Tools)**
-- **Complete PowerPoint manipulation** with 34 specialized tools
-- **11 organized modules** covering all aspects of presentation creation
+### **Comprehensive Tool Suite (42 Tools)**
+- **Complete PowerPoint manipulation** with 42 specialized tools
+- **14 organized modules** covering all aspects of presentation creation
 - **Enhanced parameter handling** with comprehensive validation
 - **Intelligent defaults** and operation-based interfaces
 
@@ -208,7 +208,7 @@ If you have `uvx` installed, you can run the server directly from PyPI without l
 - **Complete presentation generation** from template sequences
 
 ### **Modular Architecture**
-- **11 specialized modules**: presentation, content, structural, professional, template, hyperlink, chart, connector, master, and transition tools
+- **14 specialized modules**: presentation, content, structural, professional, template, hyperlink, chart, connector, master, transition, shape, render, and diagram tools
 - **Better maintainability** with separated concerns
 - **Easier extensibility** for adding new features
 - **Cleaner code structure** with shared utilities
@@ -259,9 +259,23 @@ The server provides **34 specialized tools** organized into the following catego
 ### **Specialized Features (5 tools)**
 30. **manage_hyperlinks** - Complete hyperlink management (add/remove/list/update)
 31. **manage_slide_masters** - Access and manage slide master properties and layouts
-32. **add_connector** - Add connector lines/arrows between points on slides
+32. **add_connector** - Add connector lines between points on slides, with arrowheads (`arrow_end`/`arrow_start`) and dash styles
 33. **update_chart_data** - Replace existing chart data with new categories and series
 34. **manage_slide_transitions** - Basic slide transition management
+
+### **Diagram Building (5 tools)**
+35. **manage_shapes** - List, move, resize, delete and re-order (z-order) shapes on a slide
+36. **render_slide** - Render a slide to PNG to check the layout (PowerPoint on Windows, or LibreOffice)
+37. **list_icons** - Search the icon library (folders in `PPT_ICON_PATH` plus `icons/`)
+38. **add_icon** - Place an icon from the library with an optional label underneath
+39. **add_diagram_elements** - Add many shapes, icons, text boxes and connectors in one call
+
+`create_presentation` also accepts `slide_size` (`"4:3"`, `"16:9"`, `"16:10"`) or a custom `width`/`height` in inches, and
+`add_shape` supports `right_arrow`, `left_arrow`, `up_arrow`, `down_arrow`, `left_right_arrow`, `up_down_arrow`, `chevron`, `cylinder` and `cube`.
+
+**Icons:** run `python scripts/fetch_aws_icons.py` once to download the AWS icon set into `icons/aws/`
+(subject to the [AWS architecture icon terms](https://aws.amazon.com/architecture/icons/)), or point `PPT_ICON_PATH` at your own
+folders of PNG/JPG icons (SVG works if `cairosvg` is installed).
 
 ## 🌟 Key Unified Tools
 
@@ -896,7 +910,7 @@ Templates automatically adjust to content:
 Office-PowerPoint-MCP-Server/
 ├── ppt_mcp_server.py          # Main consolidated server (v2.0)
 ├── slide_layout_templates.json # 25+ professional slide templates with dynamic features
-├── tools/                     # 11 specialized tool modules (32 tools total)
+├── tools/                     # 14 specialized tool modules (42 tools total)
 │   ├── __init__.py
 │   ├── presentation_tools.py  # Presentation management (7 tools)
 │   ├── content_tools.py       # Content & slides (6 tools)
@@ -907,7 +921,11 @@ Office-PowerPoint-MCP-Server/
 │   ├── chart_tools.py         # Advanced chart operations (1 tool)
 │   ├── connector_tools.py     # Connector lines/arrows (1 tool)
 │   ├── master_tools.py        # Slide master management (1 tool)
-│   └── transition_tools.py    # Slide transitions (1 tool)
+│   ├── transition_tools.py    # Slide transitions (1 tool)
+│   ├── shape_tools.py         # Shape list/move/resize/delete/z-order (1 tool)
+│   ├── render_tools.py        # Slide rendering to PNG (1 tool)
+│   └── diagram_tools.py       # Icon library & batch diagram elements (3 tools)
+├── scripts/                   # fetch_aws_icons.py (downloads the AWS icon set)
 ├── utils/                     # 7 organized utility modules (68+ functions)
 │   ├── __init__.py
 │   ├── core_utils.py          # Error handling & safe operations
@@ -925,9 +943,9 @@ Office-PowerPoint-MCP-Server/
 
 ### **Modular Design**
 - **7 focused utility modules** with clear responsibilities
-- **11 organized tool modules** for comprehensive coverage
+- **14 organized tool modules** for comprehensive coverage
 - **68+ utility functions** organized by functionality
-- **32 MCP tools** covering all PowerPoint manipulation needs
+- **42 MCP tools** covering all PowerPoint manipulation needs
 - **Clear separation of concerns** for easier development
 
 ### **Code Organization**

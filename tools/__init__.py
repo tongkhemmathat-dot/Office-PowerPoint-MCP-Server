@@ -13,6 +13,9 @@ from .chart_tools import register_chart_tools
 from .connector_tools import register_connector_tools
 from .master_tools import register_master_tools
 from .transition_tools import register_transition_tools
+from .shape_tools import register_shape_tools
+from .render_tools import register_render_tools
+from .diagram_tools import register_diagram_tools
 
 __all__ = [
     "register_presentation_tools",
@@ -24,5 +27,8 @@ __all__ = [
     "register_chart_tools",
     "register_connector_tools",
     "register_master_tools",
-    "register_transition_tools"
+    "register_transition_tools",
+    "register_shape_tools",
+    "register_render_tools",
+    "register_diagram_tools"
 ]
