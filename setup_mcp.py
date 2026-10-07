@@ -6,6 +6,10 @@ import sys         # For accessing Python interpreter related variables and func
 import platform    # For getting current operating system information
 import shutil      # For checking if executables exist in PATH
 
+# This fork is installed from GitHub: the PyPI package of the same name belongs to the upstream
+# project and does not contain this fork's tools. Update the tag when you release a new version.
+PACKAGE_SOURCE = "git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.1"
+
 def check_prerequisites():
     """
     Check if necessary prerequisites are installed
@@ -171,7 +175,7 @@ def generate_mcp_config_local(python_path):
 
 def generate_mcp_config_uvx():
     """
-    Generate MCP configuration for PyPI-installed office-powerpoint-mcp-server using UVX
+    Generate MCP configuration for pip-installed office-powerpoint-mcp-server using UVX
     
     Returns: Path to the generated config file
     """
@@ -190,7 +194,7 @@ def generate_mcp_config_uvx():
         "mcpServers": {
             "ppt": {
                 "command": "uvx",
-                "args": ["--from", "office-powerpoint-mcp-server", "ppt_mcp_server"],
+                "args": ["--from", PACKAGE_SOURCE, "ppt_mcp_server"],
                 "env": env_config
             }
         }
@@ -205,7 +209,7 @@ def generate_mcp_config_uvx():
 
 def generate_mcp_config_module():
     """
-    Generate MCP configuration for PyPI-installed office-powerpoint-mcp-server using Python module
+    Generate MCP configuration for pip-installed office-powerpoint-mcp-server using Python module
     
     Returns: Path to the generated config file
     """
@@ -237,19 +241,19 @@ def generate_mcp_config_module():
     
     return config_path
 
-def install_from_pypi():
+def install_from_github():
     """
-    Install office-powerpoint-mcp-server from PyPI
+    Install office-powerpoint-mcp-server from GitHub (see PACKAGE_SOURCE)
     
     Returns: True if successful, False otherwise
     """
-    print("\nInstalling office-powerpoint-mcp-server from PyPI...")
+    print("\nInstalling office-powerpoint-mcp-server from GitHub...")
     try:
-        subprocess.run([sys.executable, "-m", "pip", "install", "office-powerpoint-mcp-server"], check=True)
-        print("office-powerpoint-mcp-server successfully installed from PyPI!")
+        subprocess.run([sys.executable, "-m", "pip", "install", PACKAGE_SOURCE], check=True)
+        print("office-powerpoint-mcp-server successfully installed from GitHub!")
         return True
     except subprocess.CalledProcessError:
-        print("Failed to install office-powerpoint-mcp-server from PyPI.")
+        print("Failed to install office-powerpoint-mcp-server from GitHub (is git installed?).")
         return False
 
 def print_config_instructions(config_path):
@@ -493,13 +497,13 @@ if __name__ == '__main__':
         print("office-powerpoint-mcp-server is not installed.")
         
         print("\nOptions:")
-        print("1. Install from PyPI (recommended)")
+        print("1. Install from GitHub (recommended)")
         print("2. Set up local development environment")
         
         choice = input("\nEnter your choice (1-2): ")
         
         if choice == "1":
-            if install_from_pypi():
+            if install_from_github():
                 if uvx_installed:
                     print("\nNow generating MCP config for UVX...")
                     config_path = generate_mcp_config_uvx()

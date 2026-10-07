@@ -70,7 +70,40 @@ A comprehensive MCP (Model Context Protocol) server for PowerPoint manipulation 
 
 ## Installation
 
-### Installing via Smithery
+### Installing from GitHub (recommended)
+
+This fork is installed straight from GitHub. The `office-powerpoint-mcp-server` package on PyPI and the Smithery listing belong to the upstream project (older releases) and do **not** contain this fork's tools.
+
+Requirements: Python 3.10+ and `git`.
+
+```bash
+# with uv (nothing to install permanently; get uv with `pip install uv` or `winget install astral-sh.uv`)
+uvx --from git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.1 ppt_mcp_server
+
+# or with pip
+pip install git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.1
+```
+
+MCP client configuration (Claude Desktop / Claude Code / Cursor ...):
+
+```json
+{
+  "mcpServers": {
+    "ppt": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.1", "ppt_mcp_server"],
+      "env": { "PPT_TEMPLATE_PATH": "C:\\path\\to\\your\\templates" }
+    }
+  }
+}
+```
+
+- Pin a release tag (`@v2.1.1`); to upgrade, change the tag (use `@main` to follow development, and `uvx --refresh` to re-fetch).
+- The wheel includes the built-in `se-*` icons. Templates, scripts and the skill are not installed by pip: clone the repo to use `templates/SE_Template.pptx`, `scripts/` (icon downloads/extraction) and `skills/`, and point `PPT_TEMPLATE_PATH` / `PPT_ICON_PATH` at them.
+
+### Installing via Smithery (upstream project)
+
+The Smithery listing installs the upstream project, not this fork:
 
 To install PowerPoint Manipulation Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@GongRzhe/Office-PowerPoint-MCP-Server):
 
@@ -80,7 +113,7 @@ npx -y @smithery/cli install @GongRzhe/Office-PowerPoint-MCP-Server --client cla
 
 ### Prerequisites
 
-- Python 3.6 or higher (as specified in pyproject.toml)
+- Python 3.10 or higher (as specified in pyproject.toml)
 - pip package manager
 - Optional: uvx for package execution without local installation
 
@@ -97,7 +130,7 @@ python setup_mcp.py
 This script will:
 - Check prerequisites
 - Offer installation options:
-  - Install from PyPI (recommended for most users)
+  - Install from GitHub (recommended for most users)
   - Set up local development environment
 - Install required dependencies
 - Generate the appropriate MCP configuration file
