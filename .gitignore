@@ -13,4 +13,10 @@ test/
 .DS_Store
 CLAUDE.md
 # Downloaded icon libraries (see scripts/fetch_aws_icons.py)
-icons/
+/icons/
+
+# Customer material (never commit)
+example/
+templates/*.vsd
+templates/*.vsdx
+templates/*.vssx
