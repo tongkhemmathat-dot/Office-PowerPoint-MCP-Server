@@ -6,6 +6,7 @@ batch tool for building a whole diagram in one call.
 Icon folders are searched recursively for png/jpg/jpeg/gif/svg files:
   - every directory listed in the PPT_ICON_PATH environment variable (os.pathsep-separated)
   - the `icons/` directory next to ppt_mcp_server.py
+  - the built-in `assets/icons/` directory (system-engineering icons named `se-*`)
 Run `python scripts/fetch_aws_icons.py` to populate `icons/aws/` with the AWS icon set.
 """
 
@@ -29,7 +30,8 @@ _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def _icon_dirs() -> List[str]:
     dirs = [d for d in os.environ.get("PPT_ICON_PATH", "").split(os.pathsep) if d]
-    dirs.append(os.path.join(_REPO_ROOT, "icons"))
+    dirs.append(os.path.join(_REPO_ROOT, "icons"))                 # downloaded sets (gitignored)
+    dirs.append(os.path.join(_REPO_ROOT, "assets", "icons"))       # built-in sets shipped with the repo
     return [d for d in dirs if os.path.isdir(d)]
 
 

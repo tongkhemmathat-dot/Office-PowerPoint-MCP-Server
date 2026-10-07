@@ -273,9 +273,14 @@ The server provides **34 specialized tools** organized into the following catego
 `create_presentation` also accepts `slide_size` (`"4:3"`, `"16:9"`, `"16:10"`) or a custom `width`/`height` in inches, and
 `add_shape` supports `right_arrow`, `left_arrow`, `up_arrow`, `down_arrow`, `left_right_arrow`, `up_down_arrow`, `chevron`, `cylinder` and `cube`.
 
-**Icons:** run `python scripts/fetch_aws_icons.py` once to download the AWS icon set into `icons/aws/`
-(subject to the [AWS architecture icon terms](https://aws.amazon.com/architecture/icons/)), or point `PPT_ICON_PATH` at your own
-folders of PNG/JPG icons (SVG works if `cairosvg` is installed).
+**Icons** (found by `list_icons` / `add_icon`):
+- Built-in `se-*` set in `assets/icons/se/`: servers, VM/ESX, database, NAS, switch, firewall, internet, users, workstation, container, image, registry (regenerate with `python scripts/generate_se_icons.py`).
+- `python scripts/fetch_aws_icons.py` downloads the AWS icon set into `icons/aws/` (subject to the [AWS architecture icon terms](https://aws.amazon.com/architecture/icons/)).
+- `python scripts/fetch_container_icons.py` downloads the official Kubernetes icons (`icons/k8s/`) and Docker/Helm/Podman logos (`icons/docker/`).
+- `python scripts/extract_visio_icons.py <file-or-folder>` extracts icons from your own Visio stencils/diagrams (`.vssx`/`.vsdx`) into `icons/visio/`; vector shapes are exported through Visio (needs Windows, Visio and `pywin32`).
+- Or point `PPT_ICON_PATH` at your own folders of PNG/JPG icons (SVG works if `cairosvg` is installed).
+
+`icons/` is gitignored: keep vendor icons local. `templates/SE_Template.pptx` is a 16:9 master/layout template (Thai-ready, logo placeholder, footer with date and page number) for system-engineering decks; `templates/SE_Template_Preview.pptx` shows each layout.
 
 ## 🌟 Key Unified Tools
 
