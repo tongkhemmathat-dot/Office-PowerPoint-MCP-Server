@@ -78,10 +78,10 @@ Requirements: Python 3.10+ and `git`.
 
 ```bash
 # with uv (nothing to install permanently; get uv with `pip install uv` or `winget install astral-sh.uv`)
-uvx --from git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.1 ppt_mcp_server
+uvx --from git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.2 ppt_mcp_server
 
 # or with pip
-pip install git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.1
+pip install git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.2
 ```
 
 MCP client configuration (Claude Desktop / Claude Code / Cursor ...):
@@ -91,14 +91,14 @@ MCP client configuration (Claude Desktop / Claude Code / Cursor ...):
   "mcpServers": {
     "ppt": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.1", "ppt_mcp_server"],
+      "args": ["--from", "git+https://github.com/tongkhemmathat-dot/Office-PowerPoint-MCP-Server@v2.1.2", "ppt_mcp_server"],
       "env": { "PPT_TEMPLATE_PATH": "C:\\path\\to\\your\\templates" }
     }
   }
 }
 ```
 
-- Pin a release tag (`@v2.1.1`); to upgrade, change the tag (use `@main` to follow development, and `uvx --refresh` to re-fetch).
+- Pin a release tag (`@v2.1.2`); to upgrade, change the tag (use `@main` to follow development, and `uvx --refresh` to re-fetch).
 - The wheel includes the built-in `se-*` icons. Templates, scripts and the skill are not installed by pip: clone the repo to use `templates/SE_Template.pptx`, `scripts/` (icon downloads/extraction) and `skills/`, and point `PPT_TEMPLATE_PATH` / `PPT_ICON_PATH` at them.
 
 ### Installing via Smithery (upstream project)
@@ -313,7 +313,7 @@ The server provides **34 specialized tools** organized into the following catego
 - `python scripts/extract_visio_icons.py <file-or-folder>` extracts icons from your own Visio stencils/diagrams (`.vssx`/`.vsdx`) into `icons/visio/`; vector shapes are exported through Visio (needs Windows, Visio and `pywin32`).
 - Or point `PPT_ICON_PATH` at your own folders of PNG/JPG icons (SVG works if `cairosvg` is installed).
 
-`icons/` is gitignored: keep vendor icons local. `templates/SE_Template.pptx` is a 16:9 master/layout template (Thai-ready, logo placeholder, footer with date and page number) for system-engineering decks; `templates/SE_Template_Preview.pptx` shows each layout.
+`icons/` is gitignored: keep vendor icons local. `templates/SE_Template.pptx` is a 16:9 master/layout template (Thai-ready, logo placeholder, footer with date and page number) for system-engineering decks; `templates/SE_Template_Preview.pptx` shows each layout. `templates/SE_Template_Sarabun.pptx` is the same template in TH Sarabun New (larger text sizes); regenerate either with `scripts/build_se_template.py --font ... --scale ...`.
 
 ## 🌟 Key Unified Tools
 

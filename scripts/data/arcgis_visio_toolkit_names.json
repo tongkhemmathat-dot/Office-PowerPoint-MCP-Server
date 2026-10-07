@@ -1,0 +1,40 @@
+{
+  "1": [
+    "Branch Versioning Server", "Business Analyst Server", "Data Reviewer Server", "GeoEvent Server",
+    "Geoprocessing Server", "ArcGIS Server", "Notebook Server", "Hosting Server", "Image Server",
+    "Image Server Image Hosting", "Image Server Raster Analytics",
+    "Knowledge Server", "Mission Server", "Multiple Role Server", "Python Scripting Server",
+    "Video Server", "Workflow Manager Server", "ArcGIS Monitor", "License Manager",
+    "Data Processing Server", "ETL Server",
+    "Portal", "Web Adaptor Java", "Web Adaptor IIS", "Web Adaptor"
+  ],
+  "2": [
+    "Multiple Role Data Store", "Object Data Store", "Raster Data Store", "Relational Data Store",
+    "Spatiotemporal Big Data Store", "Tile Cache Data Store", "Geodatabase", "File Geodatabase",
+    "Enterprise Geodatabase",
+    "Enterprise Geodatabase Oracle", "Enterprise Geodatabase IBM DB2", "Enterprise Geodatabase PostgreSQL",
+    "Enterprise Geodatabase SAP HANA", "Enterprise Geodatabase SQL Server", "Mobile Geodatabase",
+    "Cloud Data Warehouse", "Cloud Data Warehouse Amazon Redshift", "Cloud Data Warehouse Google BigQuery",
+    "Cloud Data Warehouse Snowflake",
+    "Big Data File Share", "Big Data File Share Amazon S3", "Big Data File Share Hadoop DFS",
+    "Big Data File Share Hadoop Hive", "Big Data File Share Azure Blob", "Big Data File Share Azure Data Lake",
+    "Configuration Store", "Content Store"
+  ],
+  "3": [
+    "User Type Contributor Person", "User Type Creator Person", "User Type Mobile Worker Person",
+    "User Type Professional Person", "User Type Professional Plus Person", "User Type Viewer Person",
+    "User Type Contributor", "User Type Creator", "User Type Mobile Worker", "User Type Professional",
+    "User Type Professional Plus", "User Type Viewer",
+    "Administrator", "Developer", "GIS Analyst", "IT Professional", "Knowledge Worker", "Manager",
+    "Mobile User", "Policy Maker", "Presenter", "Programmer", "Project Owner", "Researcher",
+    "User", "Users Map Presentation", "Users Pair", "Users Group", "Workforce"
+  ],
+  "4": [
+    "ArcGIS Pro", "Notebook", "Survey", "Hub", "Site", "Dashboard", "Desktop Application",
+    "Mobile Application", "Web Application", "Web Map",
+    "Basemap", "Point", "Line", "Polygon", "Raster", "Bar Chart", "Table", "Gauge", "Chart", "Document", "Graph",
+    "DDOS", "DNS", "File Share", "Firewall", "Forward Proxy", "Reverse Proxy", "Identity Provider",
+    "License Manager Network", "Load Balancer", "SSL Certificate", "ArcGIS Online",
+    "ArcGIS Enterprise", "ArcGIS System"
+  ]
+}
