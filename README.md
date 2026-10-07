@@ -313,7 +313,7 @@ The server provides **34 specialized tools** organized into the following catego
 - `python scripts/extract_visio_icons.py <file-or-folder>` extracts icons from your own Visio stencils/diagrams (`.vssx`/`.vsdx`) into `icons/visio/`; vector shapes are exported through Visio (needs Windows, Visio and `pywin32`).
 - Or point `PPT_ICON_PATH` at your own folders of PNG/JPG icons (SVG works if `cairosvg` is installed).
 
-`icons/` is gitignored: keep vendor icons local. `templates/SE_Template.pptx` is a 16:9 master/layout template (Thai-ready, logo placeholder, footer with date and page number) for system-engineering decks; `templates/SE_Template_Preview.pptx` shows each layout.
+`icons/` is gitignored: keep vendor icons local. `templates/SE_Template.pptx` is a 16:9 master/layout template (Thai-ready, logo placeholder, footer with date and page number) for system-engineering decks; `templates/SE_Template_Preview.pptx` shows each layout. `templates/SE_Template_Sarabun.pptx` is the same template in TH Sarabun New (larger text sizes); regenerate either with `scripts/build_se_template.py --font ... --scale ...`.
 
 ## 🌟 Key Unified Tools
 
