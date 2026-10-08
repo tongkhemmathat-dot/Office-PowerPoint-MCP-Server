@@ -411,6 +411,9 @@ def main(transport: str = "stdio", port: int = 8000):
         import asyncio
         # Set the port for HTTP transport
         app.settings.port = port
+        # Plain JSON responses (no SSE required in the Accept header) and no session state
+        app.settings.json_response = True
+        app.settings.stateless_http = True
         # Start the FastMCP server with HTTP transport
         try:
             app.run(transport='streamable-http')
@@ -423,6 +426,7 @@ def main(transport: str = "stdio", port: int = 8000):
             
     elif transport == "sse":
         # Run the FastMCP server in SSE (Server Side Events) mode
+        app.settings.port = port
         app.run(transport='sse')
         
     else:
