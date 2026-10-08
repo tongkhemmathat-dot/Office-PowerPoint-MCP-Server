@@ -26,8 +26,31 @@ from tools import (
 )
 
 # Initialize the FastMCP server
+def _load_server_instructions() -> str:
+    """Send the bundled skill guides to every MCP client (they are otherwise Claude Code only)."""
+    base = os.path.dirname(os.path.abspath(__file__))
+    header = (
+        "ALWAYS use the bundled assets instead of drawing from scratch: call list_icons(query=...) "
+        "before any diagram and place icons with add_icon / add_diagram_elements (type 'icon'); "
+        "use list_slide_templates / create_presentation_from_template for styled decks. "
+        "Never claim an icon exists unless list_icons returned it.\n\n"
+    )
+    parts = []
+    for skill in ("ppt-slides-and-diagrams", "ppt-thai-sarabun"):
+        try:
+            with open(os.path.join(base, "skills", skill, "SKILL.md"), encoding="utf-8") as f:
+                text = f.read()
+            if text.startswith("---"):
+                text = text.split("---", 2)[-1]
+            parts.append(text.strip())
+        except OSError:
+            continue
+    return header + "\n\n".join(parts)
+
+
 app = FastMCP(
-    name="ppt-mcp-server"
+    name="ppt-mcp-server",
+    instructions=_load_server_instructions()
 )
 
 # Global state to store presentations in memory
